@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixtures - Scout Salone Football Agency</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: #dcdcdc;
+            overflow-x: hidden;
+        }
+
+        /* PAGE GRID */
+        .page-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            max-width: 1500px;
+            margin: auto;
+            padding: 80px 20px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+        }
+
+        .nav-logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #ffd700;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            margin-left: 35px;
+            text-decoration: none;
+            color: #e6e6e6;
+            font-size: 17px;
+            font-weight: 600;
+            position: relative;
+            transition: 0.3s ease;
+        }
+
+        /* Underline hover */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            bottom: -6px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #ffd700;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* MOBILE */
+        .nav-toggle {
+            display: none;
+            color: #ffd700;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                width: 220px;
+                padding: 25px;
+                display: none;
+                flex-direction: column;
+                border-left: 1px solid rgba(255, 215, 0, 0.15);
+                border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            }
+
+            .nav-links a {
+                margin: 12px 0;
+                font-size: 18px;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+        }
+
+        /* Show menu */
+        .show-menu {
+            display: flex !important;
+        }
+
+
+        /* SIDEBAR */
+        .sidebar {
+            background: linear-gradient(145deg, #0a0a0a, #111);
+            border-left: 2px solid gold;
+            padding: 25px;
+            border-radius: 18px;
+            height: max-content;
+            position: sticky;
+            top: 40px;
+        }
+
+        .sidebar h3 {
+            color: gold;
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .table-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-card:hover {
+            transform: scale(1.02);
+            transition: 0.3s;
+        }
+
+        .league-table {
+            width: 100%;
+            font-size: 14px;
+            border-collapse: collapse;
+        }
+
+        .league-table th {
+            color: gold;
+            text-align: left;
+            padding-bottom: 8px;
+        }
+
+        .league-table td {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        /* MAIN CONTENT */
+        .fixtures-section h2 {
+            text-align: center;
+            font-size: 45px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: gold;
+            margin-bottom: 50px;
+        }
+
+        .competition {
+            margin-bottom: 50px;
+            padding: 35px;
+            border-radius: 24px;
+            background: linear-gradient(145deg, #0c0c0c, #121212);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.1);
+            transition: .4s;
+        }
+
+        .competition:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 60px rgba(255, 215, 0, 0.25);
+        }
+
+        .competition h3 {
+            color: gold;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* FIXTURE CARD */
+        .fixture-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .fixture-card:hover {
+            background: rgba(255, 215, 0, 0.06);
+            transform: scale(1.02);
+        }
+
+        .fixture-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fixture-teams {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .fixture-info {
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #bbb;
+        }
+
+        .fixture-info i {
+            color: gold;
+            margin-right: 6px;
+        }
+
+        /* MOBILE */
+        @media(max-width:1100px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+
+
+        @media(max-width:600px) {
+            .fixture-teams {
+                font-size: 16px;
+            }
+
+            .fixtures-section h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Scout Salone</div>
+
+            <div class="nav-links" id="navLinks">
+                <a href="home.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="players.html">Players</a>
+                <a href="matches.html" class="active">Matches</a>
+                <a href="contactUs.html">Contact Us</a>
+            </div>
+
+            <div class="nav-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="page-wrapper">
+
+        <!-- MAIN FIXTURES -->
+        <section class="fixtures-section">
+            <h2>Upcoming Fixtures</h2>
+
+            <!-- PREMIER LEAGUE -->
+            <div class="competition">
+                <h3><i class="fas fa-trophy"></i> Premier League</h3>
+
+                <!-- FIXTURE TEMPLATE -->
+                <div class="fixture-card">
+                    <div class="fixture-top">
+                        <div class="fixture-teams">Team A vs Team B</div>
+                        <div class="fixture-date">20 Nov 2025 - 4:00 PM</div>
+                    </div>
+
+                    <div class="fixture-info">
+                        <div><i class="fas fa-location-dot"></i> National Stadium, Freetown</div>
+                        <div><i class="fas fa-whistle"></i> Referee: John Kamara</div>
+                    </div>
+                </div>
+
+                <div class="fixture-card">
+                    <div class="fixture-top">
+                        <div class="fixture-teams">Team C vs Team D</div>
+                        <div class="fixture-date">21 Nov 2025 - 6:00 PM</div>
+                    </div>
+
+                    <div class="fixture-info">
+                        <div><i class="fas fa-location-dot"></i> Bo Stadium, Bo Town</div>
+                        <div><i class="fas fa-whistle"></i> Referee: Musa Conteh</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CHAMPIONS CUP -->
+            <div class="competition">
+                <h3><i class="fas fa-trophy"></i> Champions Cup</h3>
+
+                <div class="fixture-card">
+                    <div class="fixture-top">
+                        <div class="fixture-teams">Team M vs Team N</div>
+                        <div class="fixture-date">27 Nov 2025 - 3:00 PM</div>
+                    </div>
+
+                    <div class="fixture-info">
+                        <div><i class="fas fa-location-dot"></i> Makeni Arena</div>
+                        <div><i class="fas fa-whistle"></i> Referee: Lamin Bangura</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h3>Premier League Table</h3>
+
+            <div class="table-card">
+                <table class="league-table">
+                    <tr>
+                        <th>#</th>
+                        <th>Team</th>
+                        <th>Pts</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Team A</td>
+                        <td>44</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Team B</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Team C</td>
+                        <td>38</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Team D</td>
+                        <td>35</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Team E</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Team F</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Team G</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Team H</td>
+                        <td>27</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Team I</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Team J</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Team K</td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Team L</td>
+                        <td>21</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Team M</td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Team N</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Team O</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>Team P</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>Team Q</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>Team R</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>Team S</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>Team T</td>
+                        <td>8</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Other Leagues</h3>
+            <div class="table-card">
+                <p style="color:white; text-align:center;">Championship</p>
+            </div>
+            <div class="table-card">
+                <p style="color:white; text-align:center;">National League</p>
+            </div>
+            <div class="table-card">
+                <p style="color:white; text-align:center;">Youth League</p>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <footer style="text-align:center; color:#888; padding:25px;">2025 Scout Salone Football Agency © All Rights Reserved
+    </footer>
+
+</body>
+
+</html>
